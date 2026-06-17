@@ -263,48 +263,48 @@ def main():
         print(f"    AUC          : {np.nanmean(seg_auc):.3f} ± {np.nanstd(seg_auc):.3f}")
 
     # ── Save results to text file ──────────────────────────────────────────────────
-    # with results_path.open("a") as f:
-    #     f.write("=== Classifier Performance Results ===\n")
-    #     f.write(f"Date Run            : {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
-    #     f.write(f"HC Folder           : {hc_folder}\n")
-    #     f.write(f"RTT Folder          : {rtt_folder}\n")
-    #     f.write(f"Model Choice        : {model_choice}\n")
-    #     f.write(f"Best Hyperparameters: {best_params}\n\n")
+    with results_path.open("a") as f:
+        f.write("=== Classifier Performance Results ===\n")
+        f.write(f"Date Run            : {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write(f"HC Folder           : {hc_folder}\n")
+        f.write(f"RTT Folder          : {rtt_folder}\n")
+        f.write(f"Model Choice        : {model_choice}\n")
+        f.write(f"Best Hyperparameters: {best_params}\n\n")
         
-    #     f.write("=== Fold-wise Metrics ===\n")
-    #     for fold_idx in range(outer_splits):
-    #         f.write(f"Fold {fold_idx + 1}:\n")
-    #         f.write(f"  Accuracy    : {seg_acc[fold_idx]:.3f}\n")
-    #         f.write(f"  Precision   : {seg_prec[fold_idx]:.3f}\n")
-    #         f.write(f"  Sensitivity : {seg_sens[fold_idx]:.3f}\n")
-    #         f.write(f"  Specificity : {seg_spec[fold_idx]:.3f}\n")
-    #         f.write(f"  F1 Score    : {seg_f1[fold_idx]:.3f}\n")
-    #         f.write(f"  Balanced Acc: {seg_bacc[fold_idx]:.3f}\n")
-    #         f.write(f"  AUC         : {seg_auc[fold_idx]:.3f}\n\n")
+        f.write("=== Fold-wise Metrics ===\n")
+        for fold_idx in range(outer_splits):
+            f.write(f"Fold {fold_idx + 1}:\n")
+            f.write(f"  Accuracy    : {seg_acc[fold_idx]:.3f}\n")
+            f.write(f"  Precision   : {seg_prec[fold_idx]:.3f}\n")
+            f.write(f"  Sensitivity : {seg_sens[fold_idx]:.3f}\n")
+            f.write(f"  Specificity : {seg_spec[fold_idx]:.3f}\n")
+            f.write(f"  F1 Score    : {seg_f1[fold_idx]:.3f}\n")
+            f.write(f"  Balanced Acc: {seg_bacc[fold_idx]:.3f}\n")
+            f.write(f"  AUC         : {seg_auc[fold_idx]:.3f}\n\n")
             
-    #     f.write("=== Final Evaluation Summary ===\n")
-    #     f.write(f"  Accuracy    : {np.mean(seg_acc):.3f} ± {np.std(seg_acc):.3f}\n")
-    #     # Write a concise, human-readable report. Appending mode is used so
-    #     # multiple runs accumulate in the same file for later inspection.
-    #     f.write(f"  Precision   : {np.mean(seg_prec):.3f} ± {np.std(seg_prec):.3f}\n")
-    #     f.write(f"  Sensitivity : {np.mean(seg_sens):.3f} ± {np.std(seg_sens):.3f}\n")
-    #     f.write(f"  Specificity : {np.mean(seg_spec):.3f} ± {np.std(seg_spec):.3f}\n")
-    #     f.write(f"  F1 Score    : {np.mean(seg_f1):.3f} ± {np.std(seg_f1):.3f}\n")
-    #     f.write(f"  Balanced Acc: {np.mean(seg_bacc):.3f} ± {np.std(seg_bacc):.3f}\n")
-    #     if not np.all(np.isnan(seg_auc)):
-    #         f.write(f"  AUC         : {np.nanmean(seg_auc):.3f} ± {np.nanstd(seg_auc):.3f}\n")
-    #     else:
-    #         f.write("  AUC         : N/A\n")
+        f.write("=== Final Evaluation Summary ===\n")
+        f.write(f"  Accuracy    : {np.mean(seg_acc):.3f} ± {np.std(seg_acc):.3f}\n")
+        # Write a concise, human-readable report. Appending mode is used so
+        # multiple runs accumulate in the same file for later inspection.
+        f.write(f"  Precision   : {np.mean(seg_prec):.3f} ± {np.std(seg_prec):.3f}\n")
+        f.write(f"  Sensitivity : {np.mean(seg_sens):.3f} ± {np.std(seg_sens):.3f}\n")
+        f.write(f"  Specificity : {np.mean(seg_spec):.3f} ± {np.std(seg_spec):.3f}\n")
+        f.write(f"  F1 Score    : {np.mean(seg_f1):.3f} ± {np.std(seg_f1):.3f}\n")
+        f.write(f"  Balanced Acc: {np.mean(seg_bacc):.3f} ± {np.std(seg_bacc):.3f}\n")
+        if not np.all(np.isnan(seg_auc)):
+            f.write(f"  AUC         : {np.nanmean(seg_auc):.3f} ± {np.nanstd(seg_auc):.3f}\n")
+        else:
+            f.write("  AUC         : N/A\n")
             
-    #     f.write("\n=== Timing Summary ===\n")
-    #     total = time.time() - pipeline_start
-    #     for stage, secs in _timings.items():
-    #         m, s = divmod(secs, 60)
-    #         f.write(f"  {stage:<42} {int(m)}m {s:.1f}s  ({100 * secs / total:.1f}%)\n")
-    #     f.write(f"  {'Total':<42} {int(t_m)}m {t_s:.1f}s\n")
-    #     if _fold_times:
-    #         f.write(f"  Avg per eval fold: {int(fm)}m {fs:.1f}s\n")
-    # print(f"\nResults successfully saved to {results_path}")
+        f.write("\n=== Timing Summary ===\n")
+        total = time.time() - pipeline_start
+        for stage, secs in _timings.items():
+            m, s = divmod(secs, 60)
+            f.write(f"  {stage:<42} {int(m)}m {s:.1f}s  ({100 * secs / total:.1f}%)\n")
+        f.write(f"  {'Total':<42} {int(t_m)}m {t_s:.1f}s\n")
+        if _fold_times:
+            f.write(f"  Avg per eval fold: {int(fm)}m {fs:.1f}s\n")
+    print(f"\nResults successfully saved to {results_path}")
 
 if __name__ == "__main__":
     main()

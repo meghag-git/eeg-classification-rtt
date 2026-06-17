@@ -1,1 +1,552 @@
-=== Classification Results ===
+=== Classifier Performance Results ===
+Date Run            : 2026-06-17 16:22:46
+HC Folder           : /home/megha/Data/PSD_Files/HC_Italy_4sec_EC
+RTT Folder          : /home/megha/Data/PSD_Files/RTT_20Channels_4sec_EC
+Model Choice        : SVM_linear
+Best Hyperparameters: {'clf__class_weight': {0: 3, 1: 1}, 'clf__C': 1}
+
+=== Fold-wise Metrics ===
+Fold 1:
+  Accuracy    : 0.848
+  Precision   : 0.918
+  Sensitivity : 1.000
+  Specificity : 0.333
+  F1 Score    : 0.705
+  Balanced Acc: 0.667
+  AUC         : 0.757
+
+Fold 2:
+  Accuracy    : 0.676
+  Precision   : 0.733
+  Sensitivity : 0.549
+  Specificity : 1.000
+  F1 Score    : 0.672
+  Balanced Acc: 0.775
+  AUC         : 0.788
+
+Fold 3:
+  Accuracy    : 0.831
+  Precision   : 0.818
+  Sensitivity : 0.958
+  Specificity : 0.471
+  F1 Score    : 0.743
+  Balanced Acc: 0.714
+  AUC         : 0.906
+
+Fold 4:
+  Accuracy    : 0.718
+  Precision   : 0.678
+  Sensitivity : 0.939
+  Specificity : 0.227
+  F1 Score    : 0.577
+  Balanced Acc: 0.583
+  AUC         : 0.871
+
+Fold 5:
+  Accuracy    : 0.838
+  Precision   : 0.842
+  Sensitivity : 0.750
+  Specificity : 1.000
+  F1 Score    : 0.835
+  Balanced Acc: 0.875
+  AUC         : 0.954
+
+=== Final Evaluation Summary ===
+  Accuracy    : 0.782 ± 0.071
+  Precision   : 0.798 ± 0.084
+  Sensitivity : 0.839 ± 0.169
+  Specificity : 0.606 ± 0.331
+  F1 Score    : 0.706 ± 0.084
+  Balanced Acc: 0.723 ± 0.099
+  AUC         : 0.855 ± 0.073
+
+=== Timing Summary ===
+  Step 1 — data loading                      0m 0.3s  (1.0%)
+  Step 2 — subject split                     0m 0.0s  (0.0%)
+  Step 3 — hyperparameter tuning             0m 24.9s  (71.2%)
+  Step 4 — classification folds              0m 9.7s  (27.7%)
+  Total                                      0m 35.0s
+  Avg per eval fold: 0m 1.9s
+=== Classifier Performance Results ===
+Date Run            : 2026-06-17 18:09:37
+HC Folder           : /home/megha/Data/PSD_Files/HC_Italy_4sec_EC
+RTT Folder          : /home/megha/Data/PSD_Files/RTT_20Channels_4sec_EC
+Model Choice        : SVM_rbf
+Best Hyperparameters: {'clf__gamma': 'scale', 'clf__class_weight': {0: 8, 1: 1}, 'clf__C': 10}
+
+=== Fold-wise Metrics ===
+Fold 1:
+  Accuracy    : 0.861
+  Precision   : 0.873
+  Sensitivity : 0.984
+  Specificity : 0.444
+  F1 Score    : 0.754
+  Balanced Acc: 0.714
+  AUC         : 0.619
+
+Fold 2:
+  Accuracy    : 0.746
+  Precision   : 0.681
+  Sensitivity : 0.902
+  Specificity : 0.350
+  F1 Score    : 0.637
+  Balanced Acc: 0.626
+  AUC         : 0.799
+
+Fold 3:
+  Accuracy    : 0.954
+  Precision   : 0.971
+  Sensitivity : 1.000
+  Specificity : 0.824
+  F1 Score    : 0.936
+  Balanced Acc: 0.912
+  AUC         : 1.000
+
+Fold 4:
+  Accuracy    : 0.817
+  Precision   : 0.788
+  Sensitivity : 0.816
+  Specificity : 0.818
+  F1 Score    : 0.797
+  Balanced Acc: 0.817
+  AUC         : 0.897
+
+Fold 5:
+  Accuracy    : 0.716
+  Precision   : 0.777
+  Sensitivity : 0.562
+  Specificity : 1.000
+  F1 Score    : 0.716
+  Balanced Acc: 0.781
+  AUC         : 0.976
+
+=== Final Evaluation Summary ===
+  Accuracy    : 0.819 ± 0.085
+  Precision   : 0.818 ± 0.098
+  Sensitivity : 0.853 ± 0.159
+  Specificity : 0.687 ± 0.247
+  F1 Score    : 0.768 ± 0.099
+  Balanced Acc: 0.770 ± 0.096
+  AUC         : 0.858 ± 0.139
+
+=== Timing Summary ===
+  Step 1 — data loading                      0m 0.4s  (0.4%)
+  Step 2 — subject split                     0m 0.0s  (0.0%)
+  Step 3 — hyperparameter tuning             1m 16.6s  (80.3%)
+  Step 4 — classification folds              0m 18.5s  (19.3%)
+  Total                                      1m 35.4s
+  Avg per eval fold: 0m 3.7s
+=== Classifier Performance Results ===
+Date Run            : 2026-06-17 18:26:59
+HC Folder           : /home/megha/Data/PSD_Files/HC_Italy_4sec_EC
+RTT Folder          : /home/megha/Data/PSD_Files/RTT_20Channels_4sec_EC
+Model Choice        : Logistic_regression
+Best Hyperparameters: {'clf__solver': 'lbfgs', 'clf__penalty': 'l2', 'clf__class_weight': {0: 8, 1: 1}, 'clf__C': 10000.0}
+
+=== Fold-wise Metrics ===
+Fold 1:
+  Accuracy    : 0.797
+  Precision   : 0.775
+  Sensitivity : 0.984
+  Specificity : 0.167
+  F1 Score    : 0.578
+  Balanced Acc: 0.575
+  AUC         : 0.755
+
+Fold 2:
+  Accuracy    : 0.563
+  Precision   : 0.696
+  Sensitivity : 0.392
+  Specificity : 1.000
+  F1 Score    : 0.563
+  Balanced Acc: 0.696
+  AUC         : 0.619
+
+Fold 3:
+  Accuracy    : 0.785
+  Precision   : 0.724
+  Sensitivity : 0.833
+  Specificity : 0.647
+  F1 Score    : 0.731
+  Balanced Acc: 0.740
+  AUC         : 0.848
+
+Fold 4:
+  Accuracy    : 0.831
+  Precision   : 0.804
+  Sensitivity : 0.816
+  Specificity : 0.864
+  F1 Score    : 0.815
+  Balanced Acc: 0.840
+  AUC         : 0.892
+
+Fold 5:
+  Accuracy    : 0.703
+  Precision   : 0.771
+  Sensitivity : 0.542
+  Specificity : 1.000
+  F1 Score    : 0.703
+  Balanced Acc: 0.771
+  AUC         : 0.786
+
+=== Final Evaluation Summary ===
+  Accuracy    : 0.736 ± 0.096
+  Precision   : 0.754 ± 0.039
+  Sensitivity : 0.713 ± 0.215
+  Specificity : 0.735 ± 0.312
+  F1 Score    : 0.678 ± 0.095
+  Balanced Acc: 0.724 ± 0.088
+  AUC         : 0.780 ± 0.094
+
+=== Timing Summary ===
+  Step 1 — data loading                      0m 0.4s  (0.1%)
+  Step 2 — subject split                     0m 0.0s  (0.0%)
+  Step 3 — hyperparameter tuning             10m 0.2s  (95.6%)
+  Step 4 — classification folds              0m 27.5s  (4.4%)
+  Total                                      10m 28.0s
+  Avg per eval fold: 0m 5.5s
+=== Classifier Performance Results ===
+Date Run            : 2026-06-17 18:35:51
+HC Folder           : /home/megha/Data/PSD_Files/HC_Italy_4sec_EC
+RTT Folder          : /home/megha/Data/PSD_Files/RTT_20Channels_4sec_EC
+Model Choice        : kNN
+Best Hyperparameters: {'clf__metric': 'minkowski', 'clf__n_neighbors': 6, 'clf__p': 2, 'clf__weights': 'distance'}
+
+=== Fold-wise Metrics ===
+Fold 1:
+  Accuracy    : 0.823
+  Precision   : 0.770
+  Sensitivity : 0.951
+  Specificity : 0.389
+  F1 Score    : 0.696
+  Balanced Acc: 0.670
+  AUC         : 0.703
+
+Fold 2:
+  Accuracy    : 0.394
+  Precision   : 0.378
+  Sensitivity : 0.451
+  Specificity : 0.250
+  F1 Score    : 0.353
+  Balanced Acc: 0.350
+  AUC         : 0.372
+
+Fold 3:
+  Accuracy    : 0.938
+  Precision   : 0.962
+  Sensitivity : 1.000
+  Specificity : 0.765
+  F1 Score    : 0.913
+  Balanced Acc: 0.882
+  AUC         : 0.937
+
+Fold 4:
+  Accuracy    : 0.761
+  Precision   : 0.768
+  Sensitivity : 0.959
+  Specificity : 0.318
+  F1 Score    : 0.649
+  Balanced Acc: 0.639
+  AUC         : 0.846
+
+Fold 5:
+  Accuracy    : 0.716
+  Precision   : 0.747
+  Sensitivity : 0.604
+  Specificity : 0.923
+  F1 Score    : 0.715
+  Balanced Acc: 0.764
+  AUC         : 0.948
+
+=== Final Evaluation Summary ===
+  Accuracy    : 0.726 ± 0.182
+  Precision   : 0.725 ± 0.190
+  Sensitivity : 0.793 ± 0.223
+  Specificity : 0.529 ± 0.266
+  F1 Score    : 0.665 ± 0.180
+  Balanced Acc: 0.661 ± 0.177
+  AUC         : 0.761 ± 0.214
+
+=== Timing Summary ===
+  Step 1 — data loading                      0m 0.4s  (10.6%)
+  Step 2 — subject split                     0m 0.0s  (0.5%)
+  Step 3 — hyperparameter tuning             0m 2.4s  (71.5%)
+  Step 4 — classification folds              0m 0.6s  (17.3%)
+  Total                                      0m 3.3s
+  Avg per eval fold: 0m 0.1s
+=== Classifier Performance Results ===
+Date Run            : 2026-06-17 18:36:41
+HC Folder           : /home/megha/Data/PSD_Files/HC_Italy_4sec_EC
+RTT Folder          : /home/megha/Data/PSD_Files/RTT_20Channels_4sec_EC
+Model Choice        : Decision_tree
+Best Hyperparameters: {'clf__class_weight': {0: 3, 1: 1}, 'clf__criterion': 'entropy', 'clf__max_depth': 7, 'clf__min_samples_leaf': 3, 'clf__min_samples_split': 24}
+
+=== Fold-wise Metrics ===
+Fold 1:
+  Accuracy    : 0.861
+  Precision   : 0.843
+  Sensitivity : 0.967
+  Specificity : 0.500
+  F1 Score    : 0.768
+  Balanced Acc: 0.734
+  AUC         : 0.764
+
+Fold 2:
+  Accuracy    : 0.831
+  Precision   : 0.832
+  Sensitivity : 0.961
+  Specificity : 0.500
+  F1 Score    : 0.758
+  Balanced Acc: 0.730
+  AUC         : 0.725
+
+Fold 3:
+  Accuracy    : 0.938
+  Precision   : 0.910
+  Sensitivity : 0.938
+  Specificity : 0.941
+  F1 Score    : 0.923
+  Balanced Acc: 0.939
+  AUC         : 0.960
+
+Fold 4:
+  Accuracy    : 0.803
+  Precision   : 0.771
+  Sensitivity : 0.816
+  Specificity : 0.773
+  F1 Score    : 0.780
+  Balanced Acc: 0.795
+  AUC         : 0.850
+
+Fold 5:
+  Accuracy    : 0.797
+  Precision   : 0.806
+  Sensitivity : 0.708
+  Specificity : 0.962
+  F1 Score    : 0.794
+  Balanced Acc: 0.835
+  AUC         : 0.929
+
+=== Final Evaluation Summary ===
+  Accuracy    : 0.846 ± 0.051
+  Precision   : 0.833 ± 0.046
+  Sensitivity : 0.878 ± 0.101
+  Specificity : 0.735 ± 0.203
+  F1 Score    : 0.805 ± 0.061
+  Balanced Acc: 0.807 ± 0.077
+  AUC         : 0.845 ± 0.091
+
+=== Timing Summary ===
+  Step 1 — data loading                      0m 0.4s  (1.3%)
+  Step 2 — subject split                     0m 0.0s  (0.1%)
+  Step 3 — hyperparameter tuning             0m 21.3s  (78.2%)
+  Step 4 — classification folds              0m 5.6s  (20.4%)
+  Total                                      0m 27.3s
+  Avg per eval fold: 0m 1.1s
+=== Classifier Performance Results ===
+Date Run            : 2026-06-17 18:45:15
+HC Folder           : /home/megha/Data/PSD_Files/HC_Italy_4sec_EC
+RTT Folder          : /home/megha/Data/PSD_Files/RTT_20Channels_4sec_EC
+Model Choice        : Random_forest
+Best Hyperparameters: {'clf__class_weight': 'balanced', 'clf__criterion': 'entropy', 'clf__max_depth': 6, 'clf__min_samples_leaf': 14, 'clf__min_samples_split': 21, 'clf__n_estimators': 978}
+
+=== Fold-wise Metrics ===
+Fold 1:
+  Accuracy    : 0.886
+  Precision   : 0.936
+  Sensitivity : 1.000
+  Specificity : 0.500
+  F1 Score    : 0.799
+  Balanced Acc: 0.750
+  AUC         : 0.812
+
+Fold 2:
+  Accuracy    : 0.761
+  Precision   : 0.720
+  Sensitivity : 0.941
+  Specificity : 0.300
+  F1 Score    : 0.632
+  Balanced Acc: 0.621
+  AUC         : 0.889
+
+Fold 3:
+  Accuracy    : 0.985
+  Precision   : 0.990
+  Sensitivity : 1.000
+  Specificity : 0.941
+  F1 Score    : 0.980
+  Balanced Acc: 0.971
+  AUC         : 1.000
+
+Fold 4:
+  Accuracy    : 0.901
+  Precision   : 0.882
+  Sensitivity : 0.918
+  Specificity : 0.864
+  F1 Score    : 0.886
+  Balanced Acc: 0.891
+  AUC         : 0.972
+
+Fold 5:
+  Accuracy    : 0.892
+  Precision   : 0.882
+  Sensitivity : 0.833
+  Specificity : 1.000
+  F1 Score    : 0.888
+  Balanced Acc: 0.917
+  AUC         : 0.993
+
+=== Final Evaluation Summary ===
+  Accuracy    : 0.885 ± 0.072
+  Precision   : 0.882 ± 0.090
+  Sensitivity : 0.939 ± 0.062
+  Specificity : 0.721 ± 0.273
+  F1 Score    : 0.837 ± 0.117
+  Balanced Acc: 0.830 ± 0.127
+  AUC         : 0.933 ± 0.072
+
+=== Timing Summary ===
+  Step 1 — data loading                      0m 0.4s  (0.2%)
+  Step 2 — subject split                     0m 0.0s  (0.0%)
+  Step 3 — hyperparameter tuning             2m 47.7s  (81.8%)
+  Step 4 — classification folds              0m 36.9s  (18.0%)
+  Total                                      3m 25.0s
+  Avg per eval fold: 0m 7.4s
+=== Classifier Performance Results ===
+Date Run            : 2026-06-17 18:53:30
+HC Folder           : /home/megha/Data/PSD_Files/HC_Italy_4sec_EC
+RTT Folder          : /home/megha/Data/PSD_Files/RTT_20Channels_4sec_EC
+Model Choice        : Gradient_boosting
+Best Hyperparameters: {'clf__learning_rate': 0.1, 'clf__max_depth': 5, 'clf__min_samples_leaf': 9, 'clf__min_samples_split': 17, 'clf__n_estimators': 1116}
+
+=== Fold-wise Metrics ===
+Fold 1:
+  Accuracy    : 0.848
+  Precision   : 0.918
+  Sensitivity : 1.000
+  Specificity : 0.333
+  F1 Score    : 0.705
+  Balanced Acc: 0.667
+  AUC         : 0.844
+
+Fold 2:
+  Accuracy    : 0.789
+  Precision   : 0.764
+  Sensitivity : 0.941
+  Specificity : 0.400
+  F1 Score    : 0.690
+  Balanced Acc: 0.671
+  AUC         : 0.878
+
+Fold 3:
+  Accuracy    : 0.969
+  Precision   : 0.980
+  Sensitivity : 1.000
+  Specificity : 0.882
+  F1 Score    : 0.959
+  Balanced Acc: 0.941
+  AUC         : 1.000
+
+Fold 4:
+  Accuracy    : 0.817
+  Precision   : 0.811
+  Sensitivity : 0.939
+  Specificity : 0.545
+  F1 Score    : 0.762
+  Balanced Acc: 0.742
+  AUC         : 0.936
+
+Fold 5:
+  Accuracy    : 0.905
+  Precision   : 0.892
+  Sensitivity : 0.875
+  Specificity : 0.962
+  F1 Score    : 0.900
+  Balanced Acc: 0.918
+  AUC         : 0.994
+
+=== Final Evaluation Summary ===
+  Accuracy    : 0.866 ± 0.065
+  Precision   : 0.873 ± 0.077
+  Sensitivity : 0.951 ± 0.047
+  Specificity : 0.625 ± 0.254
+  F1 Score    : 0.803 ± 0.107
+  Balanced Acc: 0.788 ± 0.119
+  AUC         : 0.930 ± 0.062
+
+=== Timing Summary ===
+  Step 1 — data loading                      0m 0.4s  (0.2%)
+  Step 2 — subject split                     0m 0.0s  (0.0%)
+  Step 3 — hyperparameter tuning             2m 2.5s  (86.4%)
+  Step 4 — classification folds              0m 18.8s  (13.3%)
+  Total                                      2m 21.7s
+  Avg per eval fold: 0m 3.8s
+=== Classifier Performance Results ===
+Date Run            : 2026-06-17 19:06:22
+HC Folder           : /home/megha/Data/PSD_Files/HC_Italy_4sec_EC
+RTT Folder          : /home/megha/Data/PSD_Files/RTT_20Channels_4sec_EC
+Model Choice        : XGBoost
+Best Hyperparameters: {'clf__colsample_bytree': 0.2, 'clf__gamma': 0.3, 'clf__learning_rate': 0.1, 'clf__max_depth': 7, 'clf__min_child_weight': 1, 'clf__n_estimators': 1125, 'clf__reg_alpha': 0.01, 'clf__reg_lambda': 5.0, 'clf__scale_pos_weight': 1.0, 'clf__subsample': 0.7}
+
+=== Fold-wise Metrics ===
+Fold 1:
+  Accuracy    : 0.848
+  Precision   : 0.918
+  Sensitivity : 1.000
+  Specificity : 0.333
+  F1 Score    : 0.705
+  Balanced Acc: 0.667
+  AUC         : 0.916
+
+Fold 2:
+  Accuracy    : 0.845
+  Precision   : 0.818
+  Sensitivity : 0.922
+  Specificity : 0.650
+  F1 Score    : 0.799
+  Balanced Acc: 0.786
+  AUC         : 0.955
+
+Fold 3:
+  Accuracy    : 0.969
+  Precision   : 0.980
+  Sensitivity : 1.000
+  Specificity : 0.882
+  F1 Score    : 0.959
+  Balanced Acc: 0.941
+  AUC         : 1.000
+
+Fold 4:
+  Accuracy    : 0.789
+  Precision   : 0.883
+  Sensitivity : 1.000
+  Specificity : 0.318
+  F1 Score    : 0.675
+  Balanced Acc: 0.659
+  AUC         : 0.934
+
+Fold 5:
+  Accuracy    : 0.905
+  Precision   : 0.894
+  Sensitivity : 0.854
+  Specificity : 1.000
+  F1 Score    : 0.901
+  Balanced Acc: 0.927
+  AUC         : 0.997
+
+=== Final Evaluation Summary ===
+  Accuracy    : 0.871 ± 0.061
+  Precision   : 0.898 ± 0.053
+  Sensitivity : 0.955 ± 0.059
+  Specificity : 0.637 ± 0.278
+  F1 Score    : 0.808 ± 0.109
+  Balanced Acc: 0.796 ± 0.122
+  AUC         : 0.960 ± 0.033
+
+=== Timing Summary ===
+  Step 1 — data loading                      0m 0.4s  (0.1%)
+  Step 2 — subject split                     0m 0.0s  (0.0%)
+  Step 3 — hyperparameter tuning             8m 20.6s  (78.0%)
+  Step 4 — classification folds              2m 21.2s  (22.0%)
+  Total                                      10m 42.1s
+  Avg per eval fold: 0m 28.2s

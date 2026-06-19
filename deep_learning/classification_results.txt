@@ -1,0 +1,280 @@
+=== Classifier Performance Results ===
+Date Run            : 2026-06-19 20:44:46
+HC Folder           : /home/megha/Data/EC_Segments/HC_Italy
+RTT Folder          : /home/megha/Data/EC_Segments/RTT_20Channels
+Model Choice        : DeepConvNet
+Best Hyperparameters: {'model__temporal_kernel': 25, 'model__pool_stride': 2, 'model__pool_size': 2, 'model__learning_rate': 0.01, 'model__l2_reg': 0.001, 'model__filters_4': 250, 'model__filters_3': 100, 'model__filters_2': 60, 'model__filters_1': 30, 'model__dropout': 0.4, 'model__dense_max_norm': 0.5, 'model__conv_max_norm': 2.0, 'model__bn_momentum': 0.9, 'model__bn_epsilon': 0.0001}
+
+=== Fold-wise Metrics ===
+Fold 1:
+  Accuracy    : 0.734
+  Precision   : 0.594
+  Sensitivity : 0.869
+  Specificity : 0.278
+  F1 Score    : 0.579
+  Balanced Acc: 0.573
+  AUC         : 0.604
+
+Fold 2:
+  Accuracy    : 0.648
+  Precision   : 0.703
+  Sensitivity : 0.529
+  Specificity : 0.950
+  F1 Score    : 0.643
+  Balanced Acc: 0.740
+  AUC         : 0.835
+
+Fold 3:
+  Accuracy    : 0.969
+  Precision   : 0.947
+  Sensitivity : 0.958
+  Specificity : 1.000
+  F1 Score    : 0.962
+  Balanced Acc: 0.979
+  AUC         : 0.994
+
+Fold 4:
+  Accuracy    : 0.887
+  Precision   : 0.888
+  Sensitivity : 0.959
+  Specificity : 0.727
+  F1 Score    : 0.861
+  Balanced Acc: 0.843
+  AUC         : 0.964
+
+Fold 5:
+  Accuracy    : 0.824
+  Precision   : 0.824
+  Sensitivity : 0.750
+  Specificity : 0.962
+  F1 Score    : 0.820
+  Balanced Acc: 0.856
+  AUC         : 0.944
+
+=== Final Evaluation Summary ===
+  Accuracy    : 0.813 ± 0.113
+  Precision   : 0.791 ± 0.128
+  Sensitivity : 0.813 ± 0.161
+  Specificity : 0.783 ± 0.270
+  F1 Score    : 0.773 ± 0.141
+  Balanced Acc: 0.798 ± 0.136
+  AUC         : 0.868 ± 0.142
+
+=== Timing Summary ===
+  Step 1 — data loading                      0m 36.1s  (1.7%)
+  Step 2 — subject split                     0m 36.1s  (1.7%)
+  Step 3 — hyperparameter tuning             20m 56.4s  (58.6%)
+  Step 4 — classification folds              14m 8.1s  (39.6%)
+  Total                                      35m 42.3s
+  Avg per eval fold: 2m 49.6s
+
+=== Classifier Performance Results ===
+Date Run            : 2026-06-19 21:22:08
+HC Folder           : /home/megha/Data/EC_Segments/HC_Italy
+RTT Folder          : /home/megha/Data/EC_Segments/RTT_20Channels
+Model Choice        : ShallowConvNet
+Best Hyperparameters: {'model__temporal_kernel': 25, 'model__pool_stride': 15, 'model__pool_size': 50, 'model__learning_rate': 0.01, 'model__filters_2': 20, 'model__filters_1': 80, 'model__dropout': 0.3, 'model__dense_max_norm': 0.25, 'model__bn_momentum': 0.99, 'model__bn_epsilon': 0.001}
+
+=== Fold-wise Metrics ===
+Fold 1:
+  Accuracy    : 0.886
+  Precision   : 0.936
+  Sensitivity : 1.000
+  Specificity : 0.500
+  F1 Score    : 0.799
+  Balanced Acc: 0.750
+  AUC         : 0.653
+
+Fold 2:
+  Accuracy    : 0.901
+  Precision   : 0.870
+  Sensitivity : 0.863
+  Specificity : 1.000
+  F1 Score    : 0.889
+  Balanced Acc: 0.931
+  AUC         : 0.973
+
+Fold 3:
+  Accuracy    : 0.969
+  Precision   : 0.947
+  Sensitivity : 0.958
+  Specificity : 1.000
+  F1 Score    : 0.962
+  Balanced Acc: 0.979
+  AUC         : 1.000
+
+Fold 4:
+  Accuracy    : 0.817
+  Precision   : 0.792
+  Sensitivity : 0.796
+  Specificity : 0.864
+  F1 Score    : 0.801
+  Balanced Acc: 0.830
+  AUC         : 0.907
+
+Fold 5:
+  Accuracy    : 0.905
+  Precision   : 0.892
+  Sensitivity : 0.896
+  Specificity : 0.923
+  F1 Score    : 0.899
+  Balanced Acc: 0.909
+  AUC         : 0.965
+
+=== Final Evaluation Summary ===
+  Accuracy    : 0.896 ± 0.049
+  Precision   : 0.887 ± 0.055
+  Sensitivity : 0.903 ± 0.072
+  Specificity : 0.857 ± 0.186
+  F1 Score    : 0.870 ± 0.062
+  Balanced Acc: 0.880 ± 0.081
+  AUC         : 0.900 ± 0.127
+
+=== Timing Summary ===
+  Step 1 — data loading                      0m 34.4s  (1.9%)
+  Step 2 — subject split                     0m 34.4s  (1.9%)
+  Step 3 — hyperparameter tuning             23m 0.3s  (76.6%)
+  Step 4 — classification folds              6m 25.2s  (21.4%)
+  Total                                      30m 1.1s
+  Avg per eval fold: 1m 17.0s
+
+=== Classifier Performance Results ===
+Date Run            : 2026-06-19 21:58:27
+HC Folder           : /home/megha/Data/EC_Segments/HC_Italy
+RTT Folder          : /home/megha/Data/EC_Segments/RTT_20Channels
+Model Choice        : EEGNet
+Best Hyperparameters: {'model__norm_rate': 0.5, 'model__learning_rate': 0.01, 'model__kernLength': 64, 'model__dropoutType': 'SpatialDropout2D', 'model__dropoutRate': 0.3, 'model__F2': 32, 'model__F1': 16, 'model__D': 4}
+
+=== Fold-wise Metrics ===
+Fold 1:
+  Accuracy    : 0.886
+  Precision   : 0.936
+  Sensitivity : 1.000
+  Specificity : 0.500
+  F1 Score    : 0.799
+  Balanced Acc: 0.750
+  AUC         : 0.728
+
+Fold 2:
+  Accuracy    : 0.958
+  Precision   : 0.935
+  Sensitivity : 0.941
+  Specificity : 1.000
+  F1 Score    : 0.950
+  Balanced Acc: 0.971
+  AUC         : 0.975
+
+Fold 3:
+  Accuracy    : 0.985
+  Precision   : 0.990
+  Sensitivity : 1.000
+  Specificity : 0.941
+  F1 Score    : 0.980
+  Balanced Acc: 0.971
+  AUC         : 0.998
+
+Fold 4:
+  Accuracy    : 0.887
+  Precision   : 0.862
+  Sensitivity : 0.878
+  Specificity : 0.909
+  F1 Score    : 0.874
+  Balanced Acc: 0.893
+  AUC         : 0.935
+
+Fold 5:
+  Accuracy    : 0.892
+  Precision   : 0.882
+  Sensitivity : 0.833
+  Specificity : 1.000
+  F1 Score    : 0.888
+  Balanced Acc: 0.917
+  AUC         : 0.983
+
+=== Final Evaluation Summary ===
+  Accuracy    : 0.922 ± 0.041
+  Precision   : 0.921 ± 0.045
+  Sensitivity : 0.930 ± 0.066
+  Specificity : 0.870 ± 0.188
+  F1 Score    : 0.898 ± 0.063
+  Balanced Acc: 0.900 ± 0.081
+  AUC         : 0.924 ± 0.100
+
+=== Timing Summary ===
+  Step 1 — data loading                      0m 32.5s  (1.5%)
+  Step 2 — subject split                     0m 32.6s  (1.6%)
+  Step 3 — hyperparameter tuning             24m 29.0s  (69.9%)
+  Step 4 — classification folds              9m 57.5s  (28.4%)
+  Total                                      35m 0.6s
+  Avg per eval fold: 1m 59.5s
+
+=== Classifier Performance Results ===
+Date Run            : 2026-06-19 23:39:00
+HC Folder           : /home/megha/Data/EC_Segments/HC_Italy
+RTT Folder          : /home/megha/Data/EC_Segments/RTT_20Channels
+Model Choice        : EEGConformer
+Best Hyperparameters: {'module__temporal_kernel': 40, 'module__temporal_filters': 20, 'module__pool_stride': 5, 'module__pool_kernel': 75, 'module__emb_size': 40, 'module__drop_prob': 0.2, 'module__depth': 4, 'lr': 0.001}
+
+=== Fold-wise Metrics ===
+Fold 1:
+  Accuracy    : 0.785
+  Precision   : 0.891
+  Sensitivity : 1.000
+  Specificity : 0.056
+  F1 Score    : 0.491
+  Balanced Acc: 0.528
+  AUC         : 0.438
+
+Fold 2:
+  Accuracy    : 0.958
+  Precision   : 0.942
+  Sensitivity : 0.961
+  Specificity : 0.950
+  F1 Score    : 0.949
+  Balanced Acc: 0.955
+  AUC         : 0.983
+
+Fold 3:
+  Accuracy    : 0.800
+  Precision   : 0.779
+  Sensitivity : 0.958
+  Specificity : 0.353
+  F1 Score    : 0.678
+  Balanced Acc: 0.656
+  AUC         : 0.868
+
+Fold 4:
+  Accuracy    : 0.676
+  Precision   : 0.343
+  Sensitivity : 0.980
+  Specificity : 0.000
+  F1 Score    : 0.403
+  Balanced Acc: 0.490
+  AUC         : 0.699
+
+Fold 5:
+  Accuracy    : 0.649
+  Precision   : 0.576
+  Sensitivity : 0.979
+  Specificity : 0.038
+  F1 Score    : 0.427
+  Balanced Acc: 0.509
+  AUC         : 0.734
+
+=== Final Evaluation Summary ===
+  Accuracy    : 0.773 ± 0.109
+  Precision   : 0.706 ± 0.221
+  Sensitivity : 0.976 ± 0.015
+  Specificity : 0.279 ± 0.358
+  F1 Score    : 0.590 ± 0.204
+  Balanced Acc: 0.627 ± 0.174
+  AUC         : 0.744 ± 0.184
+
+=== Timing Summary ===
+  Step 1 — data loading                      0m 33.3s  (0.6%)
+  Step 2 — subject split                     0m 33.4s  (0.6%)
+  Step 3 — hyperparameter tuning             60m 26.0s  (60.4%)
+  Step 4 — classification folds              38m 59.5s  (39.0%)
+  Total                                      99m 59.2s
+  Avg per eval fold: 7m 47.9s
+

@@ -25,9 +25,11 @@ from utils import (
 warnings.filterwarnings("ignore")
 
 # ── Configuration ─────────────────────────────────────────────────────────────
+BASE_DIR = Path(__file__).resolve().parent
+
 # ── Data paths ────────────────────────────────────────────────────────────────
-hc_folder_default  = "/home/megha/Data/PSD_Files/HC_Italy_4sec_EC/"
-rtt_folder_default = "/home/megha/Data/PSD_Files/RTT_20Channels_4sec_EC/"
+hc_folder_default  = BASE_DIR / "Dataset" / "HC_Italy"
+rtt_folder_default = BASE_DIR / "Dataset" / "RTT_Italy"
 
 # ── Model & cross-validation ──────────────────────────────────────────────────
 # Options: SVM_linear | SVM_rbf | kNN | Logistic_regression | Decision_tree | Random_forest | Gradient_boosting | XGBoost

@@ -17,6 +17,10 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 import xgboost as xgb
 
+# Pipeline & preprocessing imports
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
 # Metric imports
 from sklearn.metrics import (
     accuracy_score,
@@ -296,3 +300,17 @@ def print_metrics(label: str, m: dict) -> None:
     print(f"  {label} | Acc: {m['acc']:.3f}  Prec: {m['prec']:.3f}  "
           f"Sens.: {m['sens']:.3f} Spec.: {m['spec']:.3f}  F1: {m['f1']:.3f}  "
           f"AUC: {m['auc']:.3f}  BAcc: {m['bacc']:.3f}")
+
+
+# Models that bypass standard scaling (tree-based estimators)
+tree_models = {"Random_forest", "Gradient_boosting", "XGBoost", "Decision_tree"}
+
+
+def build_pipeline(model_choice: str, estimator) -> Pipeline:
+    """Build a sklearn pipeline for the chosen model.
+
+    Non-tree models require standard scaling, while tree-based models do not.
+    """
+    if model_choice in tree_models:
+        return Pipeline([("clf", estimator)])
+    return Pipeline([("scaler", StandardScaler()), ("clf", estimator)])

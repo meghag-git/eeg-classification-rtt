@@ -33,11 +33,9 @@ from utils_dl import (
 warnings.filterwarnings("ignore")
 
 # ── Configuration ─────────────────────────────────────────────────────────────
-BASE_DIR = Path(__file__).resolve().parent
-
 # ── Data paths ────────────────────────────────────────────────────────────────
-hc_folder_default  = BASE_DIR / "Dataset" / "HC_Italy"
-rtt_folder_default = BASE_DIR / "Dataset" / "RTT_Italy"
+hc_folder_default  = "/home/megha/Data/EC_Segments/HC_Italy/"
+rtt_folder_default = "/home/megha/Data/EC_Segments/RTT_20Channels/"
 
 # ── Model & cross-validation ──────────────────────────────────────────────────
 # Options: ShallowConvNet | DeepConvNet | EEGNet | EEGConformer

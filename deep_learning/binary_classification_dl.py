@@ -30,10 +30,6 @@ from utils_dl import (
 warnings.filterwarnings("ignore")
 
 # ── Configuration ─────────────────────────────────────────────────────────────
-# ── Data paths ────────────────────────────────────────────────────────────────
-hc_folder_default  = "/home/megha/Data/EC_Segments/HC_Italy/"
-rtt_folder_default = "/home/megha/Data/EC_Segments/RTT_20Channels/"
-
 # ── Model & cross-validation ──────────────────────────────────────────────────
 # Options: ShallowConvNet | DeepConvNet | EEGNet | EEGConformer
 model_choice_default = "ShallowConvNet"
@@ -57,8 +53,8 @@ def parse_args():
         Parsed CLI arguments with attributes matching the script configuration
         options (folders, model choice, CV splits, seed, and results file).
     """
-    parser.add_argument("--hc-folder", default=hc_folder_default, help="Path to HC .mat files")
-    parser.add_argument("--rtt-folder", default=rtt_folder_default, help="Path to RTT .mat files")
+    parser.add_argument("--hc-folder", default=None, help="Path to HC .set files")
+    parser.add_argument("--rtt-folder", default=None, help="Path to RTT .set files")
     parser.add_argument(
         "--model-choice",
         default=model_choice_default,

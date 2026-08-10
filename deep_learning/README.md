@@ -64,12 +64,12 @@ The pipeline executes the following 4 stages:
 To run the classification pipeline using a specific model architecture:
 
 ```bash
-python binary_classification_dl.py --model-choice DeepConvNet
+python binary_classification_dl.py --hc-folder /path/to/HC_folder --rtt-folder /path/to/RTT_folder --model-choice DeepConvNet
 ```
 
 ### Configurable Command-Line Options
-* `--hc-folder`: Path to Healthy Control (HC) `.set` files (default: `/home/megha/Data/EC_Segments/HC_Italy/`)
-* `--rtt-folder`: Path to Rett Syndrome (RTT) `.set` files (default: `/home/megha/Data/EC_Segments/RTT_20Channels/`)
+* `--hc-folder`: Path to Healthy Control (HC) `.set` files 
+* `--rtt-folder`: Path to Rett Syndrome (RTT) `.set` files 
 * `--model-choice`: Model to evaluate (`ShallowConvNet`, `DeepConvNet`, `EEGNet`, or `EEGConformer`).
 * `--dev-frac`: Fraction of subjects reserved for hyperparameter tuning (default: `0.3`).
 * `--n-iter`: Number of search iterations in `RandomizedSearchCV` (default: `10`).

@@ -2,41 +2,62 @@ import argparse
 import time
 import warnings
 from pathlib import Path
-
-import numpy as np
 from collections import Counter
 
-from sklearn.model_selection import RandomizedSearchCV, StratifiedGroupKFold, train_test_split
+import numpy as np
+from sklearn.model_selection import train_test_split
 
 from utils import (
     assign_groups,
     extract_data,
-    get_model_and_params,
     set_all_seeds,
     subject_level_labels,
-    compute_metrics,
-    get_proba,
     log_elapsed,
-    print_metrics,
-    build_pipeline,
+    run_hyperparameter_tuning,
+    run_outer_cv_evaluation,
+    compute_shap_explanations,
+    generate_and_save_plots,
 )
 
 warnings.filterwarnings("ignore")
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 # ── Data paths ────────────────────────────────────────────────────────────────
-hc_folder_default  = "/home/megha/Data/PSD_Files/HC_Italy_2sec_EC/"
-rtt_folder_default = "/home/megha/Data/PSD_Files/RTT_20Channels_2sec_EC/"
+hc_folder_default  = "/home/megha/Data/PSD_Files/HC_Italy_4sec_EC/"
+rtt_folder_default = "/home/megha/Data/PSD_Files/RTT_20Channels_4sec_EC/"
 
 # ── Model & cross-validation ──────────────────────────────────────────────────
 # Options: SVM_linear | SVM_rbf | kNN | Logistic_regression | Decision_tree | Random_forest | Gradient_boosting | XGBoost
-model_choice_default = "SVM_linear"
+model_choice_default = "Decision_tree"
 dev_frac_default = 0.3   # fraction of subjects reserved for hyperparameter tuning
 n_iter_default = 20      # RandomizedSearchCV iterations
 inner_splits_default = 5  # inner CV folds (tuning)
 outer_splits_default = 5  # outer CV folds (evaluation)
 
 seed = 42
+
+# ── SHAP ──────────────────────────────────────────────────
+# 20 channel names 
+CH_NAMES = [
+    "Fp1", "Fp2", "F7", "F3", "Fz", "F4", "F8",
+    "T3", "C3", "Cz", "C4", "T4", "T5", 
+    "P3", "Pz", "P4", "T6", "O1", "Oz", "O2"    
+]
+ 
+N_CHANS = 20
+SFREQ   = 256    # Hz — used only for the frequency axis label
+
+BANDS = [
+    ("Delta",  0,  4.0),
+    ("Theta",  4.0,  8.0),
+    ("Alpha",  8.0, 13.0),
+    ("Beta",  13.0, 30.0),
+    ("Gamma", 30.0, 45.0),
+]
+BAND_COLORS = ["#378ADD", "#7F77DD", "#1D9E75", "#EF9F27", "#D85A30"]
+FREQ_PLOT_MAX = 45   # clip display above gamma
+OUTPUT_DIR = Path(__file__).parent.resolve() / "feature_importance_figures"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def parse_args():
@@ -79,12 +100,14 @@ def parse_args():
 
 def main():
     """Run the binary classification pipeline end to end."""
+    global model_choice_default
     args = parse_args()
     set_all_seeds(args.seed)
 
     hc_folder = Path(args.hc_folder)
     rtt_folder = Path(args.rtt_folder)
     model_choice = args.model_choice
+    model_choice_default = model_choice
     dev_frac = args.dev_frac
     n_iter = args.n_iter
     inner_splits = args.inner_splits
@@ -143,155 +166,84 @@ def main():
 
     # ── Step 3 — Hyperparameter tuning on DEV set ─────────────────────────────────
     _t = time.time()
-    print(f"Tuning {model_choice} ({n_iter} iterations, {inner_splits}-fold inner CV)...")
-
-    clf, param_grid = get_model_and_params(model_choice)
-    pipe = build_pipeline(model_choice, clf)
-
-    tuner = RandomizedSearchCV(
-        estimator=pipe,
-        param_distributions=param_grid,
-        n_iter=n_iter,
-        scoring="balanced_accuracy",
-        cv=StratifiedGroupKFold(n_splits=inner_splits, shuffle=True, random_state=args.seed),
-        n_jobs=1,
-        refit=True,
-        random_state=args.seed,
+    best_params, best_score = run_hyperparameter_tuning(
+        x_dev, y_dev, g_dev, model_choice, n_iter, inner_splits, args.seed
     )
-    tuner.fit(x_dev, y_dev, groups=g_dev)
-
-    best_params = tuner.best_params_
     log_elapsed("Step 3 — hyperparameter tuning", _t, _timings)
     print(f"Best params    : {best_params}")
-    print(f"Best DEV score : {tuner.best_score_:.4f}")
+    print(f"Best DEV score : {best_score:.4f}")
 
     # ── Step 4 — Evaluation on EVAL set (outer CV by subject) ─────────────────────
-
     _t = time.time()
-    _fold_times = []
-
-    win_acc, win_prec, win_sens, win_spec, win_bacc, win_f1, win_auc = [], [], [], [], [], [], []
-
-    # Store fitted models and fold information for later analysis
-    fold_models = []
-    fold_train_indices = []
-    fold_test_indices = []
-
-    print(f"Evaluating on EVAL set ({outer_splits}-fold outer CV)...")
-    print(f"Reporting window-level metrics.\n")
-
-    eval_cv = StratifiedGroupKFold(n_splits=outer_splits)
-
-    for fold_idx, (tr_idx, te_idx) in enumerate(
-        eval_cv.split(x_eval, y_eval, groups=g_eval), start=1
-    ):
-        _t_fold = time.time()
-
-        x_tr, y_tr = x_eval[tr_idx], y_eval[tr_idx]
-        x_te, y_te = x_eval[te_idx], y_eval[te_idx]
-        g_te = g_eval[te_idx]
-
-        # fresh model per fold (recreate estimator so folds are independent)
-        clf, _ = get_model_and_params(model_choice)
-        model = build_pipeline(model_choice, clf)
-        model.set_params(**best_params)
-        model.fit(x_tr, y_tr)
-
-        # Save fitted model and indices for later use
-        fold_models.append(model)
-        fold_train_indices.append(tr_idx)
-        fold_test_indices.append(te_idx)
-
-        # Window-level metrics
-        y_pred = model.predict(x_te)
-        y_proba = get_proba(model, x_te)
-        win_m = compute_metrics(y_te, y_pred, y_proba)
-
-        _fold_elapsed = time.time() - _t_fold
-        _fold_times.append(_fold_elapsed)
-        fm, fs = divmod(_fold_elapsed, 60)
-
-        print(f"Fold {fold_idx}  [{int(fm)}m {fs:.1f}s]")
-        print_metrics("Window", win_m)
-        print()
-
-        win_acc.append(win_m["acc"])
-        win_bacc.append(win_m["bacc"])
-        win_auc.append(win_m["auc"])
-        win_prec.append(win_m["prec"])
-        win_sens.append(win_m["sens"])
-        win_spec.append(win_m["spec"])
-        win_f1.append(win_m["f1"])
-
+    (
+        fold_models,
+        fold_train_indices,
+        fold_test_indices,
+        win_acc,
+        win_prec,
+        win_sens,
+        win_spec,
+        win_bacc,
+        win_f1,
+        win_auc,
+    ) = run_outer_cv_evaluation(
+        x_eval,
+        y_eval,
+        g_eval,
+        model_choice,
+        best_params,
+        outer_splits,
+        args.seed,
+        results_path,
+        hc_folder,
+        rtt_folder,
+    )
     log_elapsed("Step 4 — classification folds", _t, _timings)
 
-    # ── Summary ──────────────────────────────────────────────────────────
-    total = time.time() - pipeline_start
-    t_m, t_s = divmod(total, 60)
+    # ── Step 5 — SHAP Explanation ─────────────────────
+    _t = time.time()
+    N_FREQS = x_eval.shape[1] // N_CHANS
+    FREQS = np.linspace(0, SFREQ / 2, N_FREQS)
 
-    print("=== Timing Summary ===")
-    for stage, secs in _timings.items():
-        m, s = divmod(secs, 60)
-        print(f"  {stage:<42} {int(m)}m {s:.1f}s  ({100 * secs / total:.1f}%)")
-    print(f"  {'Total':<42} {int(t_m)}m {t_s:.1f}s")
-    if _fold_times:
-        fm, fs = divmod(np.mean(_fold_times), 60)
-        print(f"  Avg per eval fold: {int(fm)}m {fs:.1f}s")
+    (
+        all_shap,
+        fold_mean_abs,
+        mean_abs_across_folds,
+        new_index,
+        global_importance_matrix,
+        channel_importance_mean,
+    ) = compute_shap_explanations(
+        fold_models,
+        fold_train_indices,
+        fold_test_indices,
+        x_eval,
+        y_eval,
+        model_choice,
+        N_CHANS,
+        N_FREQS,
+    )
+    log_elapsed("Step 5 — SHAP feature importance", _t, _timings)
 
-    print()
-    print("=== Evaluation Summary ===")
-    print(f"    Accuracy     : {np.mean(win_acc):.3f} ± {np.std(win_acc):.3f}")
-    print(f"    Precision     : {np.mean(win_prec):.3f} ± {np.std(win_prec):.3f}")
-    print(f"    Sensitivity     : {np.mean(win_sens):.3f} ± {np.std(win_sens):.3f}")
-    print(f"    Spec.     : {np.mean(win_spec):.3f} ± {np.std(win_spec):.3f}")
-    print(f"    F1     : {np.mean(win_f1):.3f} ± {np.std(win_f1):.3f}")
-    print(f"    Balanced Acc : {np.mean(win_bacc):.3f} ± {np.std(win_bacc):.3f}")
-    if not np.all(np.isnan(win_auc)):
-        print(f"    AUC          : {np.nanmean(win_auc):.3f} ± {np.nanstd(win_auc):.3f}")
-
-    # ── Save results to text file ──────────────────────────────────────────────────
-    with results_path.open("a") as f:
-        f.write("=== Classifier Performance Results ===\n")
-        f.write(f"Date Run            : {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write(f"HC Folder           : {hc_folder}\n")
-        f.write(f"RTT Folder          : {rtt_folder}\n")
-        f.write(f"Model Choice        : {model_choice}\n")
-        f.write(f"Best Hyperparameters: {best_params}\n\n")
-        
-        f.write("=== Fold-wise Metrics ===\n")
-        for fold_idx in range(outer_splits):
-            f.write(f"Fold {fold_idx + 1}:\n")
-            f.write(f"  Accuracy    : {win_acc[fold_idx]:.3f}\n")               
-            f.write(f"  Precision   : {win_prec[fold_idx]:.3f}\n")
-            f.write(f"  Sensitivity : {win_sens[fold_idx]:.3f}\n")
-            f.write(f"  Specificity : {win_spec[fold_idx]:.3f}\n")
-            f.write(f"  F1 Score    : {win_f1[fold_idx]:.3f}\n")
-            f.write(f"  Balanced Acc: {win_bacc[fold_idx]:.3f}\n")
-            f.write(f"  AUC         : {win_auc[fold_idx]:.3f}\n\n")
-            
-        f.write("=== Final Evaluation Summary ===\n")
-        f.write(f"  Accuracy    : {np.mean(win_acc):.3f} ± {np.std(win_acc):.3f}\n")
-        # Write a concise, human-readable report. Appending mode is used so
-        # multiple runs accumulate in the same file for later inspection.
-        f.write(f"  Precision   : {np.mean(win_prec):.3f} ± {np.std(win_prec):.3f}\n")
-        f.write(f"  Sensitivity : {np.mean(win_sens):.3f} ± {np.std(win_sens):.3f}\n")
-        f.write(f"  Specificity : {np.mean(win_spec):.3f} ± {np.std(win_spec):.3f}\n")
-        f.write(f"  F1 Score    : {np.mean(win_f1):.3f} ± {np.std(win_f1):.3f}\n")
-        f.write(f"  Balanced Acc: {np.mean(win_bacc):.3f} ± {np.std(win_bacc):.3f}\n")
-        if not np.all(np.isnan(win_auc)):
-            f.write(f"  AUC         : {np.nanmean(win_auc):.3f} ± {np.nanstd(win_auc):.3f}\n")
-        else:
-            f.write("  AUC         : N/A\n")
-            
-        f.write("\n=== Timing Summary ===\n")
-        total = time.time() - pipeline_start
-        for stage, secs in _timings.items():
-            m, s = divmod(secs, 60)
-            f.write(f"  {stage:<42} {int(m)}m {s:.1f}s  ({100 * secs / total:.1f}%)\n")
-        f.write(f"  {'Total':<42} {int(t_m)}m {t_s:.1f}s\n")
-        if _fold_times:
-            f.write(f"  Avg per eval fold: {int(fm)}m {fs:.1f}s\n\n")
-    print(f"\nResults successfully saved to {results_path}")
+    # ── Step 6 — Generate and Save Plots ─────────────────────
+    generate_and_save_plots(
+        all_shap=all_shap,
+        fold_mean_abs=fold_mean_abs,
+        mean_abs_across_folds=mean_abs_across_folds,
+        x_eval=x_eval,
+        y_eval=y_eval,
+        fold_test_indices=fold_test_indices,
+        FREQS=FREQS,
+        N_CHANS=N_CHANS,
+        N_FREQS=N_FREQS,
+        SFREQ=SFREQ,
+        CH_NAMES=CH_NAMES,
+        BANDS=BANDS,
+        OUTPUT_DIR=OUTPUT_DIR,
+        model_choice=model_choice,
+        channel_importance_mean=channel_importance_mean,
+        new_index=new_index,
+        FREQ_PLOT_MAX=FREQ_PLOT_MAX,
+    )
 
 if __name__ == "__main__":
     main()

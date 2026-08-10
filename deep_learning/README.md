@@ -18,10 +18,10 @@ The pipeline utilizes nested, group-aware cross-validation to guarantee that sub
 
 All model architectures are optimized for processing 2D/3D EEG inputs `(batch, channels, samples)`:
 
-1. **ShallowConvNet** (TensorFlow/Keras): A shallow convolutional network optimized for extracting temporal and spatial features.
-2. **DeepConvNet** (TensorFlow/Keras): A deep network with multiple convolutional blocks followed by max-pooling.
-3. **EEGNet** (TensorFlow/Keras): A compact convolutional network specifically designed for EEG signals, utilizing depthwise and separable convolutions.
-4. **EEGConformer** (PyTorch/Skorch): A state-of-the-art hybrid model combining shallow CNN patch embeddings with a Transformer Encoder to capture long-range temporal dependencies.
+1. **ShallowConvNet** (TensorFlow/Keras)[Schirrmeister et al., 2017]: A shallow convolutional network optimized for extracting temporal and spatial features.
+2. **DeepConvNet** (TensorFlow/Keras)[Schirrmeister et al., 2017]: A deep network with multiple convolutional blocks followed by max-pooling. 
+3. **EEGNet** (TensorFlow/Keras)[Lawhern et al., 2018]: A compact convolutional network specifically designed for EEG signals, utilizing depthwise and separable convolutions. 
+4. **EEGConformer** (PyTorch/Skorch)[Song et al., 2023]: A state-of-the-art hybrid model combining shallow CNN patch embeddings with a Transformer Encoder to capture long-range temporal dependencies.
 
 ---
 
@@ -76,3 +76,10 @@ python binary_classification_dl.py --model-choice DeepConvNet
 * `--inner-splits`: Folds in hyperparameter tuning (default: `5`).
 * `--outer-splits`: Folds in final evaluation (default: `5`).
 * `--results-file`: Text file to append classifier performance summaries (default: `classification_results.txt`).
+
+---
+
+## References
+- Schirrmeister, R.T., Springenberg, J.T., Fiederer, L.D.J., Glasstetter, M., Eggensperger, K., Tangermann, M., Hutter, F., Burgard, W. and Ball, T. (2017), Deep learning with convolutional neural networks for EEG decoding and visualization. Hum. Brain Mapp., 38: 5391-5420. https://doi.org/10.1002/hbm.23730
+- Lawhern, V. J., Solon, A. J., Waytowich, N. R., Gordon, S. M., Hung, C. P., & Lance, B. J. (2018), EEGNet: a compact convolutional neural network for EEG-based brain–computer interfaces. Journal of neural engineering, 15(5), 056013. https://doi.org/10.1088/1741-2552/aace8c
+- Song, Y., Zheng, Q., Liu, B., and Gao, X. (2023), EEG Conformer: Convolutional Transformer for EEG Decoding and Visualization. IEEE Transactions on Neural Systems and Rehabilitation Engineering, vol. 31, pp. 710-719, 2023, doi: https://doi.org/10.1109/TNSRE.2022.3230250

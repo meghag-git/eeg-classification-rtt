@@ -21,11 +21,7 @@ from utils import (
 
 warnings.filterwarnings("ignore")
 
-# ── Configuration ─────────────────────────────────────────────────────────────
-# ── Data paths ────────────────────────────────────────────────────────────────
-hc_folder_default  = "/home/megha/Data/PSD_Files/HC_Italy_4sec_EC/"
-rtt_folder_default = "/home/megha/Data/PSD_Files/RTT_20Channels_4sec_EC/"
-
+# ── Configuration ────────────────────────────────────────────────────────────
 # ── Model & cross-validation ──────────────────────────────────────────────────
 # Options: SVM_linear | SVM_rbf | kNN | Logistic_regression | Decision_tree | Random_forest | Gradient_boosting | XGBoost
 model_choice_default = "Decision_tree"
@@ -72,8 +68,8 @@ def parse_args():
         Parsed CLI arguments with attributes matching the script configuration
         options (folders, model choice, CV splits, seed, and results file).
     """
-    parser.add_argument("--hc-folder", default=hc_folder_default, help="Path to HC .mat files")
-    parser.add_argument("--rtt-folder", default=rtt_folder_default, help="Path to RTT .mat files")
+    parser.add_argument("--hc-folder", default=None, help="Path to HC .mat files")
+    parser.add_argument("--rtt-folder", default=None, help="Path to RTT .mat files")
     parser.add_argument(
         "--model-choice",
         default=model_choice_default,

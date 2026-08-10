@@ -66,7 +66,7 @@ The pipeline executes the following 4 stages:
 To run the classification pipeline using a specific model architecture:
 
 ```bash
-python binary_classification.py --model-choice SVM_rbf
+python binary_classification.py binary_classification_dl.py --hc-folder /path/to/HC_folder --rtt-folder /path/to/RTT_folder --model-choice SVM_rbf
 ```
 
 ### Configurable Command-Line Options
